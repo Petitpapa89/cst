@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
@@ -13,6 +15,10 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/nodemailer": "^8.0.0"
+    "@nuxt/test-utils": "^4.0.3",
+    "@types/nodemailer": "^8.0.0",
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.10.3",
+    "vitest": "^4.1.8"
   }
 }

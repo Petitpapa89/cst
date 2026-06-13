@@ -21,27 +21,27 @@ Order: **verify → preserve → test → gate**, then resume the feature backlo
 ### Phase 1 — Tracker + preserve the MVP
 - [x] Write `PLAN.md` (this file)
 - [x] Memory pointer `memory/mvp-lockdown-plan.md` + `MEMORY.md` line
-- [ ] Commit working MVP on `feature_mvp` as checkpoint
+- [x] Commit working MVP on `feature_mvp` as checkpoint
 
-### Phase 2 — Test infrastructure
-- [ ] Dev deps: `vitest`, `@nuxt/test-utils`, `@vue/test-utils`, `happy-dom`
-- [ ] `vitest.config.ts`
-- [ ] Scripts: `test`, `test:watch`
-- [ ] Update CLAUDE.md "no tests" note
+### Phase 2 — Test infrastructure ✅ DONE
+- [x] Dev deps: `vitest`, `@nuxt/test-utils`, `@vue/test-utils`, `happy-dom`
+- [x] `vitest.config.ts`
+- [x] Scripts: `test`, `test:watch`
+- [x] Update CLAUDE.md "no tests" note
 
-### Phase 3 — Unit tests (riskiest code)
-- [ ] Extract inline Zod schemas → `server/utils/schemas.ts`; re-import in 3 routes
-- [ ] `sanitize.test.ts` — strips `\r\n\t`; escapes `& < > " '`
-- [ ] `rateLimiter.test.ts` — allows 5, blocks 6th, resets after window
-- [ ] `schemas.test.ts` — valid passes; bad email/short name/bad enum fail; honeypot accepted
+### Phase 3 — Unit tests (riskiest code) ✅ DONE
+- [x] Extract inline Zod schemas → `server/utils/schemas.ts`; re-import in 3 routes
+- [x] `sanitize.test.ts` — strips `\r\n\t`; escapes `& < > " '`
+- [x] `rateLimiter.test.ts` — allows 5, blocks 6th, resets after window
+- [x] `schemas.test.ts` — valid passes; bad email/short name/bad enum fail; honeypot accepted
 
-### Phase 4 — Component / snapshot tests
-- [ ] `SiteHeader` — renders nav, mobile toggle flips `aria-expanded` (`mountSuspended`)
-- [ ] Snapshot `SiteHeader` + `SiteFooter`
-- [ ] `useCoaches` — `getCoach(slug)` returns coach / null
+### Phase 4 — Component / snapshot tests ✅ DONE (27 tests green)
+- [x] `SiteHeader` — renders nav, mobile toggle flips `aria-expanded` (`mountSuspended`)
+- [x] Snapshot `SiteHeader` + `SiteFooter`
+- [x] `useCoaches` — `getCoach(slug)` returns coach / null
 
 ### Phase 5 — Quality gate
-- [ ] `.github/workflows/ci.yml` — install + build + test on push/PR
+- [x] `.github/workflows/ci.yml` — install + build + test on push/PR
 - [ ] (Optional) ESLint via `@nuxt/eslint` + `lint` script in CI
 
 ### Phase 6 — Feature backlog (deferred until 0–5 green)

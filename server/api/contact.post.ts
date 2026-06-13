@@ -1,23 +1,13 @@
-import { z } from 'zod'
 import nodemailer from 'nodemailer'
 import { checkRateLimit } from '~/server/utils/rateLimiter'
 import { sanitizeStr, escapeHtml } from '~/server/utils/sanitize'
+import { contactSchema as Schema } from '~/server/utils/schemas'
 
 const INTEREST_LABELS: Record<string, string> = {
   training: 'Training Sessions',
   facility: 'Facility Rental',
   general: 'General Question',
 }
-
-const Schema = z.object({
-  name: z.string().min(2, 'Name is required').max(100),
-  email: z.string().email('A valid email address is required').max(254),
-  phone: z.string().max(20).optional(),
-  playerAge: z.string().max(20).optional(),
-  interest: z.enum(['training', 'facility', 'general']),
-  message: z.string().min(10, 'Please include a message').max(2000),
-  _honey: z.string().optional(),
-})
 
 export default defineEventHandler(async (event) => {
   const ip =

@@ -1,7 +1,7 @@
-import { z } from 'zod'
 import nodemailer from 'nodemailer'
 import { checkRateLimit } from '~/server/utils/rateLimiter'
 import { sanitizeStr, escapeHtml } from '~/server/utils/sanitize'
+import { facilitySchema as Schema } from '~/server/utils/schemas'
 
 const RENTAL_LABELS: Record<string, string> = {
   'team-practice': 'Team Practice',
@@ -11,20 +11,6 @@ const RENTAL_LABELS: Record<string, string> = {
   'club-training': 'Club Training',
   'independent': 'Independent Trainer Session',
 }
-
-const Schema = z.object({
-  rentalType: z.enum(['team-practice', 'private-game', 'small-sided', 'birthday', 'club-training', 'independent']),
-  teamName: z.string().min(2, 'Team or group name is required').max(100),
-  contactName: z.string().min(2, 'Contact name is required').max(100),
-  email: z.string().email('A valid email address is required').max(254),
-  phone: z.string().max(20).optional(),
-  preferredDate: z.string().max(100).optional(),
-  preferredTime: z.string().max(50).optional(),
-  duration: z.string().max(20).optional(),
-  playerCount: z.string().max(10).optional(),
-  notes: z.string().max(2000).optional(),
-  _honey: z.string().optional(),
-})
 
 function row(label: string, value: string) {
   if (!value) return ''

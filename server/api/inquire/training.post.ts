@@ -1,7 +1,7 @@
-import { z } from 'zod'
 import nodemailer from 'nodemailer'
 import { checkRateLimit } from '~/server/utils/rateLimiter'
 import { sanitizeStr, escapeHtml } from '~/server/utils/sanitize'
+import { trainingSchema as Schema } from '~/server/utils/schemas'
 
 const TRAINING_LABELS: Record<string, string> = {
   '1on1': '1-on-1 Private Training',
@@ -9,20 +9,6 @@ const TRAINING_LABELS: Record<string, string> = {
   'team': 'Team Training',
   'speed-agility': 'Speed & Agility',
 }
-
-const Schema = z.object({
-  trainingType: z.enum(['1on1', 'small-group', 'team', 'speed-agility']),
-  coachPreference: z.string().max(100).optional(),
-  playerName: z.string().min(2, 'Player name is required').max(100),
-  playerAge: z.string().min(1, 'Player age is required').max(30),
-  parentName: z.string().max(100).optional(),
-  email: z.string().email('A valid email address is required').max(254),
-  phone: z.string().max(20).optional(),
-  preferredDays: z.array(z.string().max(15)).max(7).optional(),
-  preferredTime: z.string().max(50).optional(),
-  message: z.string().max(2000).optional(),
-  _honey: z.string().optional(),
-})
 
 function row(label: string, value: string) {
   if (!value) return ''

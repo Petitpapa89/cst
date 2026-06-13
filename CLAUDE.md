@@ -13,9 +13,20 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run the test suite (Vitest)
+npm test
+
+# Watch mode
+npm run test:watch
 ```
 
-There are no tests or linting scripts configured.
+Tests live in `test/` and run on Vitest. Pure logic (`server/utils/sanitize.ts`,
+`rateLimiter.ts`, and the shared Zod schemas in `server/utils/schemas.ts`) runs in the
+default node environment; component tests (`*.nuxt.spec.ts`) opt into the Nuxt environment
+via a `// @vitest-environment nuxt` docblock and use `mountSuspended` from
+`@nuxt/test-utils/runtime`. CI (`.github/workflows/ci.yml`) runs build + test on push/PR.
+No linting is configured yet.
 
 ## Architecture
 
