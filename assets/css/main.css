@@ -1,0 +1,17 @@
+/* Display headings use Anton (athletic/varsity feel, matches the CST logo).
+   Anton ships a single 400 weight, so force it to avoid synthetic-bold blobbing
+   from utility classes like font-black. Body text stays Inter. */
+h1,
+h2 {
+  font-family: 'Anton', 'Inter', system-ui, sans-serif;
+  font-weight: 400 !important;
+  letter-spacing: 0.5px;
+}
+
+/* Respect reduced-motion: hide the looping background video and fall back to the
+   poster image (set as the section's background-image). */
+@media (prefers-reduced-motion: reduce) {
+  .bg-video {
+    display: none;
+  }
+}

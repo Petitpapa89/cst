@@ -44,8 +44,8 @@ const values = [
   <section class="py-20 bg-slate-50">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <div class="flex items-center gap-3 mb-4">
-        <div class="h-px w-10 bg-blue-500"></div>
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Our Approach</span>
+        <div class="h-px w-10 bg-green-500"></div>
+        <span class="text-green-600 text-sm font-semibold uppercase tracking-widest">Our Approach</span>
       </div>
       <h2 class="text-3xl font-black text-slate-900 mb-6">Training Philosophy</h2>
       <div class="space-y-4 text-slate-600 leading-relaxed text-base">
@@ -68,7 +68,7 @@ const values = [
         <div
           v-for="value in values"
           :key="value.title"
-          class="border border-slate-100 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm transition-all"
+          class="border border-slate-100 rounded-xl p-5 hover:border-green-200 hover:shadow-sm transition-all"
         >
           <h3 class="font-bold text-slate-900 mb-2">{{ value.title }}</h3>
           <p class="text-slate-600 text-sm leading-relaxed">{{ value.description }}</p>
@@ -87,7 +87,7 @@ const values = [
       <p class="text-slate-400 leading-relaxed mb-8">
         Every player is valued, challenged, and given the opportunity to develop regardless of current ability. Strong Training is for every player willing to put in the work.
       </p>
-      <NuxtLink to="/inquire/training" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
+      <NuxtLink to="/inquire/training" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
         Start Your Journey
       </NuxtLink>
     </div>

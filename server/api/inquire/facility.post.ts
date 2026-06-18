@@ -12,6 +12,15 @@ const RENTAL_LABELS: Record<string, string> = {
   'independent': 'Independent Trainer Session',
 }
 
+// Renders an ISO date (YYYY-MM-DD) as e.g. "Saturday, June 27, 2026".
+// Appends T00:00:00 so it's parsed in local time, not shifted by UTC.
+function formatDate(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso
+  const d = new Date(`${iso}T00:00:00`)
+  if (Number.isNaN(d.getTime())) return iso
+  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 function row(label: string, value: string) {
   if (!value) return ''
   return `<tr>
@@ -61,11 +70,24 @@ export default defineEventHandler(async (event) => {
   const contactName = sanitizeStr(d.contactName)
   const email = sanitizeStr(d.email)
   const phone = sanitizeStr(d.phone ?? '')
-  const preferredDate = sanitizeStr(d.preferredDate ?? '')
+  const preferredDate = d.preferredDate ? formatDate(sanitizeStr(d.preferredDate)) : ''
   const preferredTime = sanitizeStr(d.preferredTime ?? '')
   const duration = sanitizeStr(d.duration ?? '')
   const playerCount = sanitizeStr(d.playerCount ?? '')
-  const notes = sanitizeStr(d.notes ?? '')
+  const scheduleNote = sanitizeStr(d.scheduleNote ?? '')
+
+  // Build a human-readable recurrence summary, e.g. "Weekly until Saturday, August 1, 2026".
+  const repeat = sanitizeStr(d.repeat ?? '')
+  let recurrence = ''
+  if (repeat && repeat !== 'Does not repeat') {
+    if (d.repeatNoEnd) {
+      recurrence = `${repeat} (ongoing, no end date)`
+    } else if (d.repeatUntil) {
+      recurrence = `${repeat} until ${formatDate(sanitizeStr(d.repeatUntil))}`
+    } else {
+      recurrence = repeat
+    }
+  }
 
   const html = `<!DOCTYPE html>
 <html>
@@ -99,14 +121,11 @@ export default defineEventHandler(async (event) => {
     <h2 style="margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#64748b">Preferred Schedule</h2>
     <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
       ${row('Preferred Date', escapeHtml(preferredDate))}
+      ${row('Recurrence', escapeHtml(recurrence))}
       ${row('Preferred Start Time', escapeHtml(preferredTime))}
       ${row('Duration', escapeHtml(duration))}
+      ${row('Scheduling Notes', escapeHtml(scheduleNote))}
     </table>
-
-    ${notes ? `
-    <h2 style="margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#64748b">Additional Notes</h2>
-    <div style="background:#f8fafc;border-radius:8px;padding:16px;font-size:14px;line-height:1.7;color:#374151;white-space:pre-wrap;border:1px solid #e2e8f0">${escapeHtml(notes)}</div>
-    ` : ''}
 
     <div style="margin-top:28px;padding-top:20px;border-top:1px solid #e2e8f0">
       <a href="mailto:${escapeHtml(email)}" style="display:inline-block;background:#16a34a;color:white;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none;font-size:14px">Reply to Inquiry</a>
@@ -124,9 +143,9 @@ Contact: ${contactName}
 Email: ${email}
 ${phone ? `Phone: ${phone}\n` : ''}${playerCount ? `Est. Players: ${playerCount}\n` : ''}
 Preferred Date: ${preferredDate || 'Not specified'}
-Preferred Time: ${preferredTime || 'Not specified'}
+${recurrence ? `Recurrence: ${recurrence}\n` : ''}Preferred Time: ${preferredTime || 'Not specified'}
 Duration: ${duration || 'Not specified'}
-${notes ? `\nNotes:\n${notes}` : ''}`
+${scheduleNote ? `Scheduling Notes: ${scheduleNote}\n` : ''}`
 
   const transporter = nodemailer.createTransport({
     host: config.smtpHost || 'smtp.gmail.com',

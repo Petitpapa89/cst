@@ -19,6 +19,7 @@ const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 const errorMsg = ref('')
 
 const { track } = useAnalytics()
+const { coaches } = useCoaches()
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -35,7 +36,7 @@ async function submit() {
   }
 }
 
-const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-400'
+const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-slate-400'
 const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
 </script>
 
@@ -63,7 +64,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
           </div>
           <h2 class="text-2xl font-black text-slate-900 mb-2">Inquiry Received!</h2>
           <p class="text-slate-600 mb-6">We'll review your inquiry and respond within 24 hours to confirm availability and discuss next steps.</p>
-          <NuxtLink to="/" class="inline-block text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors">
+          <NuxtLink to="/" class="inline-block text-green-600 hover:text-green-700 font-semibold text-sm transition-colors">
             ← Back to Home
           </NuxtLink>
         </div>
@@ -90,7 +91,10 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
           <!-- Coach Preference -->
           <div>
             <label for="coachPreference" :class="labelClass">Coach Preference <span class="text-slate-400 font-normal">(optional)</span></label>
-            <input id="coachPreference" v-model="form.coachPreference" type="text" maxlength="100" placeholder="e.g. Oumar Djiba, or no preference" :class="inputClass">
+            <select id="coachPreference" v-model="form.coachPreference" :class="inputClass">
+              <option value="">No preference</option>
+              <option v-for="coach in coaches" :key="coach.slug" :value="coach.name">{{ coach.name }}</option>
+            </select>
           </div>
 
           <div class="border-t border-slate-100 pt-6">
@@ -122,7 +126,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
               </div>
               <div>
                 <label for="phone" :class="labelClass">Phone <span class="text-slate-400 font-normal">(optional)</span></label>
-                <input id="phone" v-model="form.phone" type="tel" maxlength="20" placeholder="(555) 000-0000" :class="inputClass">
+                <input id="phone" v-model="form.phone" @input="form.phone = formatPhone(form.phone)" type="tel" inputmode="tel" maxlength="14" placeholder="(555) 000-0000" :class="inputClass">
               </div>
             </div>
           </div>
@@ -136,10 +140,10 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
                   <label
                     v-for="day in days"
                     :key="day"
-                    class="flex items-center gap-2 cursor-pointer border border-slate-200 rounded-lg px-3 py-2.5 hover:border-blue-300 transition-colors"
-                    :class="form.preferredDays.includes(day) ? 'border-blue-500 bg-blue-50' : ''"
+                    class="flex items-center gap-2 cursor-pointer border border-slate-200 rounded-lg px-3 py-2.5 hover:border-green-300 transition-colors"
+                    :class="form.preferredDays.includes(day) ? 'border-green-500 bg-green-50' : ''"
                   >
-                    <input type="checkbox" :value="day" v-model="form.preferredDays" class="accent-blue-600">
+                    <input type="checkbox" :value="day" v-model="form.preferredDays" class="accent-green-600">
                     <span class="text-sm text-slate-700">{{ day.slice(0, 3) }}</span>
                   </label>
                 </div>
@@ -172,7 +176,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
           <button
             type="submit"
             :disabled="status === 'loading'"
-            class="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold py-4 px-6 rounded-xl transition-colors"
+            class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-bold py-4 px-6 rounded-xl transition-colors"
           >
             <span v-if="status === 'loading'">Sending Inquiry...</span>
             <span v-else>Submit Training Inquiry</span>

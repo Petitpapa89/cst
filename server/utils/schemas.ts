@@ -24,10 +24,14 @@ export const facilitySchema = z.object({
   email: z.string().email('A valid email address is required').max(254),
   phone: z.string().max(20).optional(),
   preferredDate: z.string().max(100).optional(),
+  repeat: z.string().max(30).optional(),
+  repeatUntil: z.string().max(30).optional(),
+  repeatNoEnd: z.boolean().optional(),
+  scheduleNote: z.string().max(500).optional(),
   preferredTime: z.string().max(50).optional(),
   duration: z.string().max(20).optional(),
-  playerCount: z.string().max(10).optional(),
-  notes: z.string().max(2000).optional(),
+  // type="number" input — Vue casts it to a JS number, so coerce back to string.
+  playerCount: z.coerce.string().max(10).optional(),
   _honey: z.string().optional(),
 })
 

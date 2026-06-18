@@ -45,9 +45,11 @@ Order: **verify → preserve → test → gate**, then resume the feature backlo
 - [ ] (Optional) ESLint via `@nuxt/eslint` + `lint` script in CI
 
 ### Phase 6 — Feature backlog (deferred until 0–5 green)
+- [x] Coach-selection dropdown on `/inquire/training` (reads `useCoaches()`; submits coach name; no API change)
+- [x] Add a second coach to `useCoaches.ts` — ⚠️ currently a **placeholder** (`slug: assistant-coach`, TODO bio/philosophy); replace with real details before deploy
 - [ ] Dark mode via `@nuxtjs/color-mode` + `dark:` variants
 - [ ] Accessibility audit pass
-- [ ] More coaches in `useCoaches.ts` as content arrives
+- [ ] Replace the placeholder coach with real content as it arrives
 
 ---
 
@@ -55,3 +57,5 @@ Order: **verify → preserve → test → gate**, then resume the feature backlo
 - The grand "list" (personas, roadmap, KPIs, epics/stories) was aspirational — never created. It's a backlog, not lost work.
 - Verify: `TMPDIR=/tmp npm run build` && `TMPDIR=/tmp npm test`.
 - Full server-route e2e is out of scope for MVP; schema + util unit tests cover the risky logic.
+- Email/SMTP is configured in local `.env` (Gmail app password) and **verified working end-to-end** (real inquiry delivered). `.env` is gitignored — credentials are not committed.
+- Composable edits (`useCoaches.ts`) don't always hot-reload; restart the dev server + hard-refresh if coach changes don't appear.

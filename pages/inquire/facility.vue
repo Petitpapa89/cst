@@ -8,15 +8,22 @@ const form = reactive({
   email: '',
   phone: '',
   preferredDate: '',
+  repeat: '',
+  repeatUntil: '',
+  repeatNoEnd: false,
+  scheduleNote: '',
   preferredTime: '',
   duration: '',
   playerCount: '',
-  notes: '',
   _honey: '',
 })
 
 const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 const errorMsg = ref('')
+
+// Earliest selectable date (today, local) so visitors can't request past dates.
+const today = new Date().toISOString().slice(0, 10)
+const isRecurring = computed(() => form.repeat !== '' && form.repeat !== 'Does not repeat')
 
 const { track } = useAnalytics()
 
@@ -33,7 +40,7 @@ async function submit() {
   }
 }
 
-const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-slate-400'
+const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-slate-400'
 const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
 </script>
 
@@ -41,7 +48,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
   <!-- Header -->
   <section class="bg-slate-900 py-12">
     <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
-      <span class="text-green-400 text-sm font-semibold uppercase tracking-widest">Facility Rental</span>
+      <span class="text-orange-400 text-sm font-semibold uppercase tracking-widest">Facility Rental</span>
       <h1 class="text-4xl font-black text-white mt-3 mb-3">Facility Rental Inquiry</h1>
       <p class="text-slate-300">Fill out the form below and we'll respond within 24 hours to confirm your booking.</p>
     </div>
@@ -129,7 +136,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
                 </div>
                 <div>
                   <label for="phone" :class="labelClass">Phone <span class="text-slate-400 font-normal">(optional)</span></label>
-                  <input id="phone" v-model="form.phone" type="tel" maxlength="20" placeholder="(555) 000-0000" :class="inputClass">
+                  <input id="phone" v-model="form.phone" @input="form.phone = formatPhone(form.phone)" type="tel" inputmode="tel" maxlength="14" placeholder="(555) 000-0000" :class="inputClass">
                 </div>
               </div>
             </div>
@@ -139,13 +146,50 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
             <h3 class="text-base font-bold text-slate-900 mb-4">Preferred Schedule</h3>
             <div class="space-y-4">
               <div>
-                <label for="preferredDate" :class="labelClass">Preferred Date(s)</label>
+                <label for="preferredDate" :class="labelClass">Preferred Date</label>
                 <input
                   id="preferredDate"
                   v-model="form.preferredDate"
+                  type="date"
+                  :min="today"
+                  :class="inputClass"
+                >
+              </div>
+
+              <div>
+                <label for="repeat" :class="labelClass">Repeat</label>
+                <select id="repeat" v-model="form.repeat" :class="inputClass">
+                  <option value="">Does not repeat</option>
+                  <option value="Weekly">Weekly</option>
+                  <option value="Every 2 weeks">Every 2 weeks</option>
+                  <option value="Monthly">Monthly</option>
+                </select>
+              </div>
+
+              <div v-if="isRecurring">
+                <label :class="labelClass">Ends</label>
+                <label class="flex items-center gap-2 text-sm text-slate-700 mb-2">
+                  <input v-model="form.repeatNoEnd" type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                  No end date (ongoing)
+                </label>
+                <input
+                  v-if="!form.repeatNoEnd"
+                  v-model="form.repeatUntil"
+                  type="date"
+                  :min="form.preferredDate || today"
+                  aria-label="End date"
+                  :class="inputClass"
+                >
+              </div>
+
+              <div>
+                <label for="scheduleNote" :class="labelClass">Scheduling notes <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input
+                  id="scheduleNote"
+                  v-model="form.scheduleNote"
                   type="text"
-                  maxlength="100"
-                  placeholder="e.g. Saturday June 14, or weekends in July"
+                  maxlength="500"
+                  placeholder="e.g. flexible on the exact day, or alternate dates that work"
                   :class="inputClass"
                 >
               </div>
@@ -163,22 +207,10 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
             </div>
           </div>
 
-          <div class="border-t border-slate-100 pt-6">
-            <label for="notes" :class="labelClass">Additional Notes <span class="text-slate-400 font-normal">(optional)</span></label>
-            <textarea
-              id="notes"
-              v-model="form.notes"
-              maxlength="2000"
-              rows="4"
-              placeholder="Anything else we should know — age group, event type, specific needs..."
-              :class="inputClass"
-            ></textarea>
-          </div>
-
           <button
             type="submit"
             :disabled="status === 'loading'"
-            class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-bold py-4 px-6 rounded-xl transition-colors"
+            class="w-full bg-orange-600 hover:bg-orange-700 disabled:opacity-60 text-white font-bold py-4 px-6 rounded-xl transition-colors"
           >
             <span v-if="status === 'loading'">Sending Inquiry...</span>
             <span v-else>Submit Facility Inquiry</span>

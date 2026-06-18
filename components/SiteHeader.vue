@@ -16,8 +16,8 @@ const navLinks = [
   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
       <NuxtLink to="/" class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-          <span class="text-white font-black text-sm tracking-tight">CST</span>
+        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
+          <img src="/images/logo.jpg" alt="Chiennee Soccer Training logo" class="w-full h-full object-contain p-0.5">
         </div>
         <div class="hidden sm:block leading-tight">
           <div class="text-white font-bold text-sm">Chiennee Soccer Training</div>
@@ -40,7 +40,7 @@ const navLinks = [
       <div class="flex items-center gap-3">
         <NuxtLink
           to="/inquire/training"
-          class="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
+          class="hidden md:inline-flex bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
         >
           Book Training
         </NuxtLink>
@@ -74,7 +74,7 @@ const navLinks = [
             {{ link.label }}
           </NuxtLink>
           <div class="pt-3 mt-2 border-t border-slate-800 space-y-2">
-            <NuxtLink to="/inquire/training" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-3 rounded-lg transition-colors">
+            <NuxtLink to="/inquire/training" class="block text-center bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-3 rounded-lg transition-colors">
               Book Training
             </NuxtLink>
             <NuxtLink to="/inquire/facility" class="block text-center border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white font-semibold text-sm px-4 py-3 rounded-lg transition-colors">

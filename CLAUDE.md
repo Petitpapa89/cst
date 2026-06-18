@@ -66,8 +66,16 @@ Copy `.env.example` → `.env` and fill in a Gmail App Password. If any of `SMTP
 
 ### Coach data
 
-All coach profiles live in `composables/useCoaches.ts` as a plain array. Adding a new coach there automatically populates the coaches listing page, the home page preview, and enables a profile page at `/coaches/[slug]`. The slug must match the `slug` field in the array.
+All coach profiles live in `composables/useCoaches.ts` as a plain array. Adding a new coach there automatically populates the `/coaches` listing page, where each card shows the coach's bio (long bios collapse behind a "More" toggle). There are no per-coach profile pages. The `slug` field is used as a stable `:key` for the list.
 
 ### Styling
 
-Tailwind CSS (`@nuxtjs/tailwindcss`). Inter font via Google Fonts. Color palette: `slate-900` (navy/dark), `blue-600` (primary actions), `green-600` (facility/accent). No custom CSS — all styling is Tailwind utility classes.
+Tailwind CSS (`@nuxtjs/tailwindcss`). Fonts via Google Fonts: **Inter** for body, **Anton** for big display headings (applied to `h1`/`h2` in `assets/css/main.css` via the `font-display` family).
+
+Brand palette derived from the CST logo (green ball + orange lettering + black outlines):
+- `green-*` — **primary / training** brand (CTAs, links, training pages, nav, header/footer accent).
+- `orange-*` — **facility** brand. Use orange for anything facility-related (`/facility-rental`, `/inquire/facility`, the home "Indoor Facility" preview) to keep training vs. facility visually distinct.
+- `slate-900` — dark sections (the logo's black).
+- `green-500`/`green-100` — universal success/checkmark states (form-submitted confirmations, "Best For" list ticks) stay green regardless of page.
+
+The logo lives at `public/images/logo.jpg` (white background — seat it on a white tile on dark bars). Training marketing photo at `public/images/training-action.jpg`. Aside from `assets/css/main.css` (heading font only), all styling is Tailwind utility classes.

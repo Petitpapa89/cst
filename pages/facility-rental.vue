@@ -23,13 +23,17 @@ const steps = [
   <section class="bg-slate-900 py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="flex items-center gap-3 mb-4">
-        <div class="h-px w-10 bg-green-500"></div>
-        <span class="text-green-400 text-sm font-semibold uppercase tracking-widest">Indoor Facility</span>
+        <div class="h-px w-10 bg-orange-500"></div>
+        <span class="text-orange-400 text-sm font-semibold uppercase tracking-widest">Indoor Facility</span>
       </div>
       <h1 class="text-5xl font-black text-white mb-4">Private Indoor Facility Rental</h1>
       <p class="text-xl text-slate-300 max-w-2xl">
         Book CST's private indoor facility for team practices, games, training events, and more.
       </p>
+      <div class="mt-6 inline-flex items-baseline gap-2 bg-slate-800 rounded-xl px-5 py-3">
+        <span class="text-3xl font-black text-white">$75</span>
+        <span class="text-slate-400 font-medium">per hour</span>
+      </div>
     </div>
   </section>
 
@@ -37,17 +41,17 @@ const steps = [
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-12">
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">How It's Used</span>
+        <span class="text-orange-600 text-sm font-semibold uppercase tracking-widest">How It's Used</span>
         <h2 class="text-3xl font-black text-slate-900 mt-2">Rental Use Cases</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="use in useCases"
           :key="use.label"
-          class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-green-200 hover:shadow-sm transition-all"
+          class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all"
         >
-          <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
             </svg>
           </div>
@@ -62,7 +66,7 @@ const steps = [
   <section class="py-16 bg-slate-50">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-10">
-        <span class="text-blue-600 text-sm font-semibold uppercase tracking-widest">Process</span>
+        <span class="text-orange-600 text-sm font-semibold uppercase tracking-widest">Process</span>
         <h2 class="text-3xl font-black text-slate-900 mt-2">How Facility Booking Works</h2>
       </div>
       <div class="space-y-6">
@@ -85,7 +89,7 @@ const steps = [
       <h2 class="text-3xl font-black text-white mb-4">Ready to Book the Facility?</h2>
       <p class="text-slate-300 mb-8 text-lg">Submit your rental inquiry and we'll confirm availability within 24 hours.</p>
       <div class="flex flex-wrap gap-4 justify-center">
-        <NuxtLink to="/inquire/facility" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
+        <NuxtLink to="/inquire/facility" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
           Book Facility Time
         </NuxtLink>
         <NuxtLink to="/contact" class="border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-bold px-8 py-4 rounded-xl transition-colors">

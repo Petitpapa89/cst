@@ -6,17 +6,22 @@ const programs = [
     title: '1-on-1 Private Training',
     description: 'Personalized training focused on technical ability, confidence, and individual development. Work directly with a CST coach to address your specific needs and accelerate your growth.',
     bestFor: ['Players needing focused individual attention', 'Technical skill improvement', 'Confidence and decision-making', 'Position-specific development'],
+    price: '$55',
+    priceUnit: 'per session',
     cta: 'Inquire About Private Training',
     to: '/inquire/training',
     svgPath: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
-    iconBg: 'bg-blue-50',
-    iconColor: 'text-blue-600',
-    ctaBg: 'bg-blue-600 hover:bg-blue-700',
+    iconBg: 'bg-green-50',
+    iconColor: 'text-green-600',
+    ctaBg: 'bg-green-600 hover:bg-green-700',
   },
   {
     title: 'Small Group Training',
     description: 'Competitive sessions with a small number of players, designed to create realistic pressure and game-like decision-making. Train harder together and push each other to improve.',
     bestFor: ['Friends or teammates training together', 'Competitive touches and pressure', 'Game-like development', 'Building chemistry with teammates'],
+    price: '$35',
+    priceUnit: 'per player',
+    priceNote: 'Up to 6 players',
     cta: 'Inquire About Small Group',
     to: '/inquire/training',
     svgPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
@@ -28,6 +33,8 @@ const programs = [
     title: 'Team Training',
     description: 'Structured sessions for full teams focused on technical development, game intelligence, and tactical habits. Elevate your entire roster together.',
     bestFor: ['Club and recreational teams', 'Off-season development', 'Team chemistry and communication', 'Technical and tactical improvement'],
+    price: '$150',
+    priceUnit: 'per session',
     cta: 'Request Team Training',
     to: '/inquire/training',
     svgPath: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
@@ -39,6 +46,8 @@ const programs = [
     title: 'Speed & Agility',
     description: 'Movement training focused on acceleration, change of direction, balance, explosiveness, and injury prevention. Become a faster, more athletic player.',
     bestFor: ['Faster first step and acceleration', 'Better body control and balance', 'Athletic development at any level', 'Injury prevention and movement quality'],
+    price: '$55',
+    priceUnit: 'per session',
     cta: 'Inquire About Speed & Agility',
     to: '/inquire/training',
     svgPath: 'M13 10V3L4 14h7v7l9-11h-7z',
@@ -50,6 +59,8 @@ const programs = [
     title: 'Indoor Facility Rental',
     description: 'Book our private indoor facility for team practices, private games, small-sided matches, birthday soccer events, and independent training sessions.',
     bestFor: ['Team practices and scrimmages', 'Private games and small-sided matches', 'Birthday soccer events', 'Club and independent trainer sessions'],
+    price: '$75',
+    priceUnit: 'per hour',
     cta: 'Inquire About Facility Rental',
     to: '/inquire/facility',
     svgPath: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
@@ -62,8 +73,26 @@ const programs = [
 
 <template>
   <!-- Hero -->
-  <section class="bg-slate-900 py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+  <section
+    class="relative py-28 overflow-hidden bg-slate-900 bg-cover bg-center"
+    style="background-image: url('/videos/programs-poster.jpg')"
+  >
+    <video
+      class="bg-video absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/videos/programs-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="/videos/programs.webm" type="video/webm">
+      <source src="/videos/programs.mp4" type="video/mp4">
+    </video>
+    <!-- Brand-tinted dark overlay so text stays readable over the footage -->
+    <div class="absolute inset-0 bg-slate-900/80"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
       <span class="text-green-400 text-sm font-semibold uppercase tracking-widest">What We Offer</span>
       <h1 class="text-5xl font-black text-white mt-3 mb-4">Training Programs</h1>
       <p class="text-xl text-slate-300 max-w-2xl mx-auto">
@@ -89,7 +118,14 @@ const programs = [
             </div>
           </div>
           <div class="flex-1">
-            <h2 class="text-2xl font-black text-slate-900 mb-2">{{ program.title }}</h2>
+            <div class="sm:flex sm:items-start sm:justify-between sm:gap-4 mb-2">
+              <h2 class="text-2xl font-black text-slate-900">{{ program.title }}</h2>
+              <div class="flex-shrink-0 mt-1 sm:mt-0 sm:text-right">
+                <span class="text-2xl font-black text-slate-900">{{ program.price }}</span>
+                <span class="text-sm font-medium text-slate-500 ml-1">{{ program.priceUnit }}</span>
+                <p v-if="program.priceNote" class="text-xs text-slate-500 mt-0.5">{{ program.priceNote }}</p>
+              </div>
+            </div>
             <p class="text-slate-600 leading-relaxed mb-5">{{ program.description }}</p>
             <div class="mb-6">
               <p class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Best For</p>
@@ -119,11 +155,11 @@ const programs = [
   </section>
 
   <!-- CTA -->
-  <section class="py-16 bg-blue-600">
+  <section class="py-16 bg-green-600">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-3xl font-black text-white mb-4">Not Sure Which Program Is Right?</h2>
-      <p class="text-blue-100 mb-8">Send us a message and we'll help you find the best fit for your player or team.</p>
-      <NuxtLink to="/contact" class="inline-block bg-white hover:bg-blue-50 text-blue-600 font-bold px-8 py-4 rounded-xl transition-colors">
+      <p class="text-green-100 mb-8">Send us a message and we'll help you find the best fit for your player or team.</p>
+      <NuxtLink to="/contact" class="inline-block bg-white hover:bg-green-50 text-green-600 font-bold px-8 py-4 rounded-xl transition-colors">
         Contact Us
       </NuxtLink>
     </div>

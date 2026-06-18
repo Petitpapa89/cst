@@ -56,6 +56,40 @@ describe('facilitySchema', () => {
     const r = facilitySchema.safeParse({ ...valid, contactName: '' })
     expect(r.success).toBe(false)
   })
+
+  it('accepts a recurring schedule with an end date', () => {
+    const r = facilitySchema.safeParse({
+      ...valid,
+      preferredDate: '2026-06-27',
+      repeat: 'Weekly',
+      repeatUntil: '2026-08-01',
+      repeatNoEnd: false,
+      scheduleNote: 'Flexible on the exact day',
+    })
+    expect(r.success).toBe(true)
+  })
+
+  it('accepts an ongoing recurrence with no end date', () => {
+    const r = facilitySchema.safeParse({
+      ...valid,
+      preferredDate: '2026-06-27',
+      repeat: 'Monthly',
+      repeatNoEnd: true,
+    })
+    expect(r.success).toBe(true)
+  })
+
+  it('rejects a non-boolean repeatNoEnd', () => {
+    const r = facilitySchema.safeParse({ ...valid, repeatNoEnd: 'yes' })
+    expect(r.success).toBe(false)
+  })
+
+  it('coerces a numeric playerCount to a string', () => {
+    // Vue casts type="number" inputs to a JS number before submit.
+    const r = facilitySchema.safeParse({ ...valid, playerCount: 12 })
+    expect(r.success).toBe(true)
+    if (r.success) expect(r.data.playerCount).toBe('12')
+  })
 })
 
 describe('contactSchema', () => {

@@ -41,7 +41,7 @@ const faqs = [
   { q: 'What is the cancellation policy?', a: 'Cancellations made 24 hours or more in advance can be rescheduled at no cost. Please contact us as soon as possible if you need to make changes.' },
 ]
 
-const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+const inputClass = 'w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent'
 const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
 </script>
 
@@ -53,7 +53,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
       <h1 class="text-5xl font-black text-white mt-3 mb-4">Contact CST</h1>
       <p class="text-xl text-slate-300 max-w-2xl mx-auto">Have a general question? Send us a message and we'll respond within 24 hours.</p>
       <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <NuxtLink to="/inquire/training" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors">
+        <NuxtLink to="/inquire/training" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors">
           Training Inquiry
         </NuxtLink>
         <NuxtLink to="/inquire/facility" class="border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors">
@@ -100,7 +100,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
               </div>
               <div>
                 <label :class="labelClass">Phone</label>
-                <input v-model="form.phone" type="tel" maxlength="20" placeholder="(555) 000-0000" :class="inputClass">
+                <input v-model="form.phone" @input="form.phone = formatPhone(form.phone)" type="tel" inputmode="tel" maxlength="14" placeholder="(555) 000-0000" :class="inputClass">
               </div>
             </div>
 
@@ -127,7 +127,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
             <button
               type="submit"
               :disabled="status === 'loading'"
-              class="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold py-3.5 px-6 rounded-xl transition-colors text-sm"
+              class="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white font-bold py-3.5 px-6 rounded-xl transition-colors text-sm"
             >
               <span v-if="status === 'loading'">Sending...</span>
               <span v-else>Send Message</span>
