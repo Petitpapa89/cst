@@ -8,3 +8,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Nuxt's runtimeConfig inlines the SMTP_* values into the server function bundle
+  # (.netlify/functions-internal) — server-side only, never shipped to the browser.
+  # Exclude that build output from Netlify's secrets scanner so the deploy doesn't fail.
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/functions-internal/**"
