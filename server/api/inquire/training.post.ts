@@ -53,6 +53,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const typeLabel = TRAINING_LABELS[d.trainingType] ?? d.trainingType
+  // Team/small-group inquiries describe a group, not one player.
+  const isGroup = d.trainingType === 'team' || d.trainingType === 'small-group'
+  const groupNoun = d.trainingType === 'team' ? 'Team' : 'Group'
   const daysStr = d.preferredDays?.join(', ') || ''
   const submitted = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })
 
@@ -81,10 +84,10 @@ export default defineEventHandler(async (event) => {
       ${row('Coach Preference', escapeHtml(coachPref))}
     </table>
 
-    <h2 style="margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#64748b">Player Information</h2>
+    <h2 style="margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#64748b">${isGroup ? `${groupNoun} Information` : 'Player Information'}</h2>
     <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-      ${row('Player Name', escapeHtml(playerName))}
-      ${row('Player Age', escapeHtml(playerAge))}
+      ${row(isGroup ? `${groupNoun} Name` : 'Player Name', escapeHtml(playerName))}
+      ${row(isGroup ? `${groupNoun} Age Range` : 'Player Age', escapeHtml(playerAge))}
       ${row('Parent / Guardian', escapeHtml(parentName))}
     </table>
 
@@ -121,7 +124,7 @@ export default defineEventHandler(async (event) => {
   const text = `New Training Inquiry — ${typeLabel}
 Submitted: ${submitted} (ET)
 
-Player: ${playerName} (Age: ${playerAge})
+${isGroup ? groupNoun : 'Player'}: ${playerName} (${isGroup ? 'Age range' : 'Age'}: ${playerAge})
 ${parentName ? `Parent/Guardian: ${parentName}\n` : ''}Email: ${email}
 ${phone ? `Phone: ${phone}\n` : ''}${coachPref ? `Coach Preference: ${coachPref}\n` : ''}
 Preferred Days: ${daysStr || 'Not specified'}

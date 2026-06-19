@@ -28,6 +28,11 @@ const { coaches } = useCoaches()
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+// Team & small-group inquiries are for a group, not one player — collect a
+// team/group name + age range instead of a single player's name.
+const isGroup = computed(() => form.trainingType === 'team' || form.trainingType === 'small-group')
+const groupNoun = computed(() => (form.trainingType === 'team' ? 'Team' : 'Group'))
+
 async function submit() {
   status.value = 'loading'
   errorMsg.value = ''
@@ -103,19 +108,19 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
           </div>
 
           <div class="border-t border-slate-100 pt-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">Player Information</h3>
+            <h3 class="text-base font-bold text-slate-900 mb-4">{{ isGroup ? groupNoun + ' Information' : 'Player Information' }}</h3>
             <div class="space-y-4">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label for="playerName" :class="labelClass">Player Name <span class="text-red-500">*</span></label>
-                  <input id="playerName" v-model="form.playerName" type="text" required maxlength="100" placeholder="Player's full name" :class="inputClass">
+                  <label for="playerName" :class="labelClass">{{ isGroup ? groupNoun + ' Name' : 'Player Name' }} <span class="text-red-500">*</span></label>
+                  <input id="playerName" v-model="form.playerName" type="text" required maxlength="100" :placeholder="isGroup ? (form.trainingType === 'team' ? 'Your team or club name' : 'Your group name') : `Player's full name`" :class="inputClass">
                 </div>
                 <div>
-                  <label for="playerAge" :class="labelClass">Player Age <span class="text-red-500">*</span></label>
-                  <input id="playerAge" v-model="form.playerAge" type="text" required maxlength="30" placeholder="e.g. 14, or U12" :class="inputClass">
+                  <label for="playerAge" :class="labelClass">{{ isGroup ? groupNoun + ' Age Range' : 'Player Age' }} <span class="text-red-500">*</span></label>
+                  <input id="playerAge" v-model="form.playerAge" type="text" required maxlength="30" :placeholder="isGroup ? 'e.g. U12, or ages 10–13' : 'e.g. 14, or U12'" :class="inputClass">
                 </div>
               </div>
-              <div>
+              <div v-if="!isGroup">
                 <label for="parentName" :class="labelClass">Parent / Guardian Name <span class="text-slate-400 font-normal">(for minors)</span></label>
                 <input id="parentName" v-model="form.parentName" type="text" maxlength="100" placeholder="Parent or guardian's name" :class="inputClass">
               </div>
