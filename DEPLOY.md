@@ -2,6 +2,27 @@
 
 Goal: get the site live **as cheaply as possible** (target ~$10/year — just a domain).
 
+## ✅ LIVE (deployed via Path A — Netlify)
+
+- **URL:** https://chienneesoccertraining.com (apex; `www` redirects to it; HTTP→HTTPS)
+- **Host:** Netlify free tier, auto-deploys on push to `main`. Build config in `netlify.toml`
+  (publish `dist`, Node 20).
+- **Email:** SMTP via Porkbun (`smtp.porkbun.com`, `support@chienneesoccertraining.com`) —
+  6 `SMTP_*` values set as **Netlify environment variables** (not committed). Verified
+  sending in production.
+- **DNS:** kept at **Porkbun** (external DNS, *not* Netlify nameservers) so the email
+  **MX records (`fwd1/fwd2.porkbun.com`) stay intact**. Apex = ALIAS → `*.netlify.app`
+  (or A `75.2.60.5`); `www` = CNAME → `chienneesoccertraining.netlify.app`.
+- **HTTPS:** free Let's Encrypt cert, auto-renewed by Netlify.
+- **Gotcha hit:** Netlify's secrets scanner failed the build on the SMTP values baked into
+  the SSR server bundle. Fixed via `SECRETS_SCAN_OMIT_PATHS = ".netlify/functions-internal/**"`
+  in `netlify.toml` (server-side only, never shipped to the browser) + placeholder-only
+  `.env.example`.
+
+The original plan/notes are kept below for reference.
+
+---
+
 ## The one constraint that drives everything
 
 This site is **not static**. The routes `/api/inquire/training`, `/api/inquire/facility`,
