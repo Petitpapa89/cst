@@ -1,0 +1,10 @@
+# Netlify build config for the Nuxt 3 (Nitro) app.
+# Nitro auto-detects Netlify and uses its `netlify` preset, which outputs the
+# static assets to `dist/` and the SSR handler as a Netlify Function. We pin the
+# publish dir + Node version so the deploy is deterministic.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
