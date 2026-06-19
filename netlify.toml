@@ -12,3 +12,7 @@
   # (.netlify/functions-internal) — server-side only, never shipped to the browser.
   # Exclude that build output from Netlify's secrets scanner so the deploy doesn't fail.
   SECRETS_SCAN_OMIT_PATHS = ".netlify/functions-internal/**"
+  # SMTP_HOST is a public hostname and SMTP_USER/TO/FROM are the public support
+  # email address (shown on the contact page) — not secrets, and they legitimately
+  # appear in docs/examples. Only SMTP_PASS (the real secret) stays scanned.
+  SECRETS_SCAN_OMIT_KEYS = "SMTP_HOST,SMTP_USER,SMTP_TO,SMTP_FROM"
