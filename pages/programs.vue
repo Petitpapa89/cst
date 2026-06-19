@@ -76,7 +76,7 @@ const { programs } = usePrograms()
               </ul>
             </div>
             <NuxtLink
-              :to="program.to"
+              :to="program.trainingType ? { path: program.to, query: { type: program.trainingType } } : program.to"
               :class="[program.ctaBg, 'inline-block text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors']"
             >
               {{ program.cta }}

@@ -1,8 +1,13 @@
 <script setup lang="ts">
 useHead({ title: 'Training Inquiry — CST' })
 
+// Pre-select the training type when arriving from a program card (e.g. ?type=1on1).
+const route = useRoute()
+const TRAINING_TYPES = ['1on1', 'small-group', 'team', 'speed-agility']
+const presetType = TRAINING_TYPES.includes(route.query.type as string) ? (route.query.type as string) : ''
+
 const form = reactive({
-  trainingType: '',
+  trainingType: presetType,
   coachPreference: '',
   playerName: '',
   playerAge: '',

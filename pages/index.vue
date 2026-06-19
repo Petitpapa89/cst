@@ -70,7 +70,7 @@ const { programs } = usePrograms()
         <NuxtLink
           v-for="program in programs"
           :key="program.title"
-          :to="program.to"
+          :to="program.trainingType ? { path: program.to, query: { type: program.trainingType } } : program.to"
           class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-green-200 hover:shadow-lg transition-all"
         >
           <div :class="[program.iconBg, 'w-12 h-12 rounded-xl flex items-center justify-center mb-4']">
