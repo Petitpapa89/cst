@@ -14,12 +14,12 @@ const navLinks = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
         <div class="md:col-span-1">
-          <div class="flex items-center gap-3 mb-4">
+          <NuxtLink to="/" class="flex items-center gap-3 mb-4 w-fit group">
             <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
               <img src="/images/logo.jpg" alt="Chiennee Soccer Training logo" class="w-full h-full object-contain p-0.5">
             </div>
-            <div class="text-white font-bold text-sm leading-tight">Chiennee Soccer Training</div>
-          </div>
+            <div class="text-white font-bold text-sm leading-tight group-hover:text-green-400 transition-colors">Chiennee Soccer Training</div>
+          </NuxtLink>
           <p class="text-slate-400 text-sm leading-relaxed">
             Strong Training. Strong Players. Strong Character.<br>
             Private soccer training for technical development, confidence, and long-term growth.
