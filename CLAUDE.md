@@ -68,6 +68,10 @@ Copy `.env.example` → `.env` and fill in a Gmail App Password. If any of `SMTP
 
 All coach profiles live in `composables/useCoaches.ts` as a plain array. Adding a new coach there automatically populates the `/coaches` listing page, where each card shows the coach's bio (long bios collapse behind a "More" toggle). There are no per-coach profile pages. The `slug` field is used as a stable `:key` for the list.
 
+### Program & pricing data
+
+All training programs and their prices live in `composables/usePrograms.ts` as a single source of truth. Both the home "Training Programs" section (`pages/index.vue`, uses `title`/`tagline`/`price`) and the `/programs` page (`pages/programs.vue`, uses `description`/`bestFor`/`cta`/`ctaBg`) render from it — so updating a price once keeps both pages in sync.
+
 ### Styling
 
 Tailwind CSS (`@nuxtjs/tailwindcss`). Fonts via Google Fonts: **Inter** for body, **Anton** for big display headings (applied to `h1`/`h2` in `assets/css/main.css` via the `font-display` family).
