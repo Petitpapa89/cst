@@ -165,7 +165,7 @@ const { programs } = usePrograms()
       <h2 class="text-4xl font-black text-white mb-4">Ready to Start Strong Training?</h2>
       <p class="text-green-100 text-xl mb-10">Join CST and develop the skills, confidence, and character that will set you apart.</p>
       <div class="flex flex-wrap gap-4 justify-center">
-        <NuxtLink to="/inquire/training" class="bg-white hover:bg-green-50 text-green-600 font-bold px-8 py-4 rounded-xl transition-colors">
+        <NuxtLink to="/programs" class="bg-white hover:bg-green-50 text-green-600 font-bold px-8 py-4 rounded-xl transition-colors">
           Book Training
         </NuxtLink>
         <NuxtLink to="/inquire/facility" class="border-2 border-white/60 hover:border-white text-white font-bold px-8 py-4 rounded-xl transition-colors">
