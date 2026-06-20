@@ -32,7 +32,13 @@ const previewBio = (bio: string) =>
       >
         <div class="p-8 sm:flex sm:gap-8">
           <div class="flex-shrink-0 mb-6 sm:mb-0">
-            <div class="w-24 h-24 bg-green-600 rounded-2xl flex items-center justify-center">
+            <img
+              v-if="coach.photo"
+              :src="coach.photo"
+              :alt="coach.name"
+              class="w-24 h-24 rounded-2xl object-cover"
+            >
+            <div v-else class="w-24 h-24 bg-green-600 rounded-2xl flex items-center justify-center">
               <span class="text-white font-black text-3xl">{{ coach.initials }}</span>
             </div>
           </div>

@@ -160,6 +160,22 @@ const { sponsors } = useSponsors()
     </div>
   </section>
 
+  <!-- Final CTA -->
+  <section class="py-24 bg-green-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-4xl font-black text-white mb-4">Ready to Start Strong Training?</h2>
+      <p class="text-green-100 text-xl mb-10">Join CST and develop the skills, confidence, and character that will set you apart.</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <NuxtLink to="/programs" class="bg-white hover:bg-green-50 text-green-600 font-bold px-8 py-4 rounded-xl transition-colors">
+          Book Training
+        </NuxtLink>
+        <NuxtLink to="/inquire/facility" class="border-2 border-white/60 hover:border-white text-white font-bold px-8 py-4 rounded-xl transition-colors">
+          Rent Facility
+        </NuxtLink>
+      </div>
+    </div>
+  </section>
+
   <!-- Sponsors -->
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
@@ -177,22 +193,6 @@ const { sponsors } = useSponsors()
         >
           <img :src="s.logo" :alt="`${s.name} logo`" class="max-w-full max-h-full object-contain">
         </component>
-      </div>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="py-24 bg-green-600">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-4xl font-black text-white mb-4">Ready to Start Strong Training?</h2>
-      <p class="text-green-100 text-xl mb-10">Join CST and develop the skills, confidence, and character that will set you apart.</p>
-      <div class="flex flex-wrap gap-4 justify-center">
-        <NuxtLink to="/programs" class="bg-white hover:bg-green-50 text-green-600 font-bold px-8 py-4 rounded-xl transition-colors">
-          Book Training
-        </NuxtLink>
-        <NuxtLink to="/inquire/facility" class="border-2 border-white/60 hover:border-white text-white font-bold px-8 py-4 rounded-xl transition-colors">
-          Rent Facility
-        </NuxtLink>
       </div>
     </div>
   </section>
