@@ -2,6 +2,7 @@
 useHead({ title: 'CST — Chiennee Soccer Training | Strong Training. Strong Players.' })
 
 const { programs } = usePrograms()
+const { sponsors } = useSponsors()
 </script>
 
 <template>
@@ -155,6 +156,27 @@ const { programs } = usePrograms()
         <NuxtLink to="/inquire/facility" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
           Book Facility Time
         </NuxtLink>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      <span class="text-green-600 text-sm font-semibold uppercase tracking-widest">Our Sponsors</span>
+      <h2 class="text-3xl font-black text-slate-900 mt-2 mb-10">Proudly Supported By</h2>
+      <div class="flex flex-wrap justify-center items-center gap-6">
+        <component
+          :is="s.url ? 'a' : 'div'"
+          v-for="s in sponsors"
+          :key="s.name"
+          :href="s.url || undefined"
+          :target="s.url ? '_blank' : undefined"
+          :rel="s.url ? 'noopener sponsored' : undefined"
+          class="bg-black rounded-2xl p-4 w-40 h-40 flex items-center justify-center ring-1 ring-slate-200 hover:scale-105 transition-transform"
+        >
+          <img :src="s.logo" :alt="`${s.name} logo`" class="max-w-full max-h-full object-contain">
+        </component>
       </div>
     </div>
   </section>
