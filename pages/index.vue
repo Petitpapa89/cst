@@ -3,6 +3,8 @@ useHead({ title: 'CST — Chiennee Soccer Training | Strong Training. Strong Pla
 
 const { programs } = usePrograms()
 const { sponsors } = useSponsors()
+const { testimonials } = useTestimonials()
+const STAR = 'M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.364 1.118l1.287 3.957c.3.922-.755 1.688-1.54 1.118l-3.367-2.447a1 1 0 00-1.176 0l-3.367 2.447c-.784.57-1.838-.196-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.98 9.384c-.783-.57-.38-1.81.588-1.81h4.161a1 1 0 00.951-.69l1.286-3.957z'
 </script>
 
 <template>
@@ -131,6 +133,43 @@ const { sponsors } = useSponsors()
         <NuxtLink to="/coaches" class="inline-block border border-slate-500 hover:border-white text-slate-200 hover:text-white font-semibold px-6 py-3 rounded-xl text-sm transition-colors">
           Meet All Coaches
         </NuxtLink>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-24 bg-slate-50 overflow-hidden">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center mb-14">
+      <span class="text-green-600 text-sm font-semibold uppercase tracking-widest">Testimonials</span>
+      <h2 class="text-4xl font-black text-slate-900 mt-2 mb-4">What Players &amp; Families Say</h2>
+      <p class="text-slate-600 leading-relaxed">Real words from the parents and players who train with CST.</p>
+    </div>
+    <div class="marquee-mask">
+      <div class="marquee-track flex w-max">
+        <figure
+          v-for="t in testimonials"
+          :key="t.name"
+          class="flex-shrink-0 w-80 mr-6 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col text-left"
+        >
+          <div class="flex gap-0.5 mb-3" :aria-label="`${t.rating} out of 5 stars`">
+            <svg v-for="n in t.rating" :key="n" class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path :d="STAR" /></svg>
+          </div>
+          <blockquote class="flex-1 text-slate-700 text-sm leading-relaxed">{{ t.quote }}</blockquote>
+          <figcaption class="mt-4 font-bold text-slate-900 text-sm">— {{ t.name }}</figcaption>
+        </figure>
+        <!-- duplicate set for the seamless loop (hidden from screen readers) -->
+        <figure
+          v-for="t in testimonials"
+          :key="t.name + '-dup'"
+          aria-hidden="true"
+          class="flex-shrink-0 w-80 mr-6 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col text-left"
+        >
+          <div class="flex gap-0.5 mb-3">
+            <svg v-for="n in t.rating" :key="n" class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path :d="STAR" /></svg>
+          </div>
+          <blockquote class="flex-1 text-slate-700 text-sm leading-relaxed">{{ t.quote }}</blockquote>
+          <figcaption class="mt-4 font-bold text-slate-900 text-sm">— {{ t.name }}</figcaption>
+        </figure>
       </div>
     </div>
   </section>

@@ -8,10 +8,35 @@ h2 {
   letter-spacing: 0.5px;
 }
 
-/* Respect reduced-motion: hide the looping background video and fall back to the
-   poster image (set as the section's background-image). */
+/* Testimonials marquee — single row that auto-scrolls right-to-left, looping
+   seamlessly (the track holds two copies of the cards; -50% shifts by one copy). */
+@keyframes testimonial-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: testimonial-marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* Respect reduced-motion: stop the looping background video (fall back to its poster
+   image) and the testimonials marquee (becomes a static, manually-scrollable strip). */
 @media (prefers-reduced-motion: reduce) {
   .bg-video {
     display: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-mask {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
