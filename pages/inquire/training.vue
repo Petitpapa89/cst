@@ -5,6 +5,8 @@ useHead({ title: 'Training Inquiry — CST' })
 const route = useRoute()
 const TRAINING_TYPES = ['1on1', 'small-group', 'ages-3-6', 'team', 'speed-agility']
 const presetType = TRAINING_TYPES.includes(route.query.type as string) ? (route.query.type as string) : ''
+// Arriving from the Ages 3–6 card locks the form to that program — no switching types.
+const lockedType = presetType === 'ages-3-6'
 
 const form = reactive({
   trainingType: presetType,
@@ -99,7 +101,10 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
           <!-- Training Type -->
           <div>
             <label for="trainingType" :class="labelClass">Training Type <span class="text-red-500">*</span></label>
-            <select id="trainingType" v-model="form.trainingType" required :class="inputClass">
+            <select v-if="lockedType" id="trainingType" v-model="form.trainingType" required :class="inputClass">
+              <option value="ages-3-6">Ages 3–6 Group Training</option>
+            </select>
+            <select v-else id="trainingType" v-model="form.trainingType" required :class="inputClass">
               <option value="" disabled>Select a training type</option>
               <option value="1on1">1-on-1 Private Training</option>
               <option value="small-group">Small Group Training</option>
