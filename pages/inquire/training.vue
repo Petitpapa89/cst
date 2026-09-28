@@ -3,7 +3,7 @@ useHead({ title: 'Training Inquiry — CST' })
 
 // Pre-select the training type when arriving from a program card (e.g. ?type=1on1).
 const route = useRoute()
-const TRAINING_TYPES = ['1on1', 'small-group', 'team', 'speed-agility']
+const TRAINING_TYPES = ['1on1', 'small-group', 'ages-3-6', 'team', 'speed-agility']
 const presetType = TRAINING_TYPES.includes(route.query.type as string) ? (route.query.type as string) : ''
 
 const form = reactive({
@@ -32,6 +32,16 @@ const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 // team/group name + age range instead of a single player's name.
 const isGroup = computed(() => form.trainingType === 'team' || form.trainingType === 'small-group')
 const groupNoun = computed(() => (form.trainingType === 'team' ? 'Team' : 'Group'))
+
+// Ages 3–6 runs on a fixed schedule — skip the availability questions and clear
+// any days/time picked before switching to it.
+const isFixedSchedule = computed(() => form.trainingType === 'ages-3-6')
+watch(isFixedSchedule, (fixed) => {
+  if (fixed) {
+    form.preferredDays = []
+    form.preferredTime = ''
+  }
+})
 
 async function submit() {
   status.value = 'loading'
@@ -93,6 +103,7 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
               <option value="" disabled>Select a training type</option>
               <option value="1on1">1-on-1 Private Training</option>
               <option value="small-group">Small Group Training</option>
+              <option value="ages-3-6">Ages 3–6 Group Training</option>
               <option value="team">Team Training</option>
               <option value="speed-agility">Speed & Agility</option>
             </select>
@@ -143,7 +154,10 @@ const labelClass = 'block text-sm font-semibold text-slate-700 mb-1.5'
 
           <div class="border-t border-slate-100 pt-6">
             <h3 class="text-base font-bold text-slate-900 mb-4">Availability</h3>
-            <div class="space-y-4">
+            <p v-if="isFixedSchedule" class="text-sm text-slate-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+              Sessions run every <strong>Tuesday, 5–6 PM</strong>.
+            </p>
+            <div v-else class="space-y-4">
               <fieldset>
                 <legend :class="labelClass">Preferred Days <span class="text-slate-400 font-normal">(select all that apply)</span></legend>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-1">

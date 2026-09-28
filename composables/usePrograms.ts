@@ -1,7 +1,7 @@
 export interface Program {
   title: string
   /** Maps to the inquiry form's trainingType <select>; absent for the facility entry. */
-  trainingType?: '1on1' | 'small-group' | 'team' | 'speed-agility'
+  trainingType?: '1on1' | 'small-group' | 'ages-3-6' | 'team' | 'speed-agility'
   /** Short one-liner used on the home page cards. */
   tagline: string
   /** Longer description used on the /programs page. */
@@ -52,6 +52,22 @@ const programs: Program[] = [
     cta: 'Inquire About Small Group',
     to: '/inquire/training',
     svgPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
+    iconBg: 'bg-green-50',
+    iconColor: 'text-green-600',
+    ctaBg: 'bg-green-600 hover:bg-green-700',
+  },
+  {
+    title: 'Ages 3–6 Group Training',
+    tagline: 'Fun, skill-building group sessions that introduce young players to the ball.',
+    description: 'Group training for ages 3 to 6, focused on skill building: ball mastery, coordination, and confidence in a fun, encouraging setting. Held every Tuesday, 5–6 PM.',
+    bestFor: ['Beginners ages 3–6', 'First touches and ball control', 'Coordination and balance', 'Learning to play with others'],
+    price: '$80',
+    priceUnit: 'per month',
+    priceNote: 'Tuesdays 5–6 PM',
+    trainingType: 'ages-3-6',
+    cta: 'Inquire About Ages 3–6',
+    to: '/inquire/training',
+    svgPath: 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
     iconBg: 'bg-green-50',
     iconColor: 'text-green-600',
     ctaBg: 'bg-green-600 hover:bg-green-700',

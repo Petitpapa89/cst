@@ -6,6 +6,7 @@ import { trainingSchema as Schema } from '~/server/utils/schemas'
 const TRAINING_LABELS: Record<string, string> = {
   '1on1': '1-on-1 Private Training',
   'small-group': 'Small Group Training',
+  'ages-3-6': 'Ages 3–6 Group Training',
   'team': 'Team Training',
   'speed-agility': 'Speed & Agility',
 }

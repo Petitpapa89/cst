@@ -4,7 +4,7 @@ import { z } from 'zod'
 // Extracted from the route handlers so they can be unit-tested in isolation.
 
 export const trainingSchema = z.object({
-  trainingType: z.enum(['1on1', 'small-group', 'team', 'speed-agility']),
+  trainingType: z.enum(['1on1', 'small-group', 'ages-3-6', 'team', 'speed-agility']),
   coachPreference: z.string().max(100).optional(),
   playerName: z.string().min(2, 'Player name is required').max(100),
   playerAge: z.string().min(1, 'Player age is required').max(30),

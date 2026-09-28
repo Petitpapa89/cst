@@ -30,6 +30,10 @@ describe('trainingSchema', () => {
     expect(r.error?.issues[0]?.message).toBe('Player name is required')
   })
 
+  it('accepts the ages 3–6 training type', () => {
+    expect(trainingSchema.safeParse({ ...valid, trainingType: 'ages-3-6' }).success).toBe(true)
+  })
+
   it('rejects an unknown training type', () => {
     const r = trainingSchema.safeParse({ ...valid, trainingType: 'bogus' })
     expect(r.success).toBe(false)
